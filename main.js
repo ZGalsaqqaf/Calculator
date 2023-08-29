@@ -1,4 +1,5 @@
 var screen = document.querySelector('#screen');
+var outScreen = document.querySelector('#out-screen');
 var btn = document.querySelectorAll('.btn');
 
 let mathOperations = ['+', '-', '*', '/', '.', '='];
@@ -93,7 +94,7 @@ function del() {
 document.getElementById("eval").onclick = function() {
     // prevent end with opetation or (
     if (!mathOperations.concat('(').includes(screen.value[screen.value.length - 1])) {
-        screen.value = eval(screen.value)
+        outScreen.value = eval(screen.value)
     }
 }
 
