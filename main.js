@@ -1,15 +1,39 @@
 var screen = document.querySelector('#screen');
 var btn = document.querySelectorAll('.btn');
 
+let mathOperations = ['+', '-', '*', '/', '.', '='];
+let brackets = ['(', ')'];
+let opWithBrackets = mathOperations.concat(brackets);
+
 for (item of btn) {
     item.addEventListener('click', (e) => {
         btntext = e.target.innerText;
         if (btntext == 'x') {
             btntext = '*';
         }
-        screen.value += btntext;
+        // prevent equation start with an operation or brackets
+        if (!(screen.value.length == 0 && mathOperations.concat(')').includes(btntext))) {
+            // prevent enter tow operations one after another
+            if (!(mathOperations.includes(screen.value[screen.value.length - 1]) && mathOperations.includes(btntext))) {
+                if (!(brackets.includes(screen.value[screen.value.length - 1]) && brackets.includes(btntext))) {
+                    screen.value += btntext;
+                }
+            }
+        } else {
+            // allow starting with .
+            if (btntext === '.') {
+                screen.value += btntext;
+            }
+        }
+        // console.log(typeof btntext)
+        // console.log(screen.value);
+        // console.log(screen.value.length);
+        // console.log(typeof screen.value);
+        // console.log(screen.value[screen.value.length - 1]);
     });
 }
+
+
 
 function sin() {
     screen.value = Math.sin(screen.value);
@@ -54,6 +78,23 @@ function fact() {
     screen.value = f;
 }
 
+function percent() {
+    screen.value /= 100;
+}
+
 function backspace() {
     screen.value = screen.value.substr(0, screen.value.length - 1);
 }
+
+function del() {
+    screen.value = "";
+}
+
+document.getElementById("eval").onclick = function() {
+    // prevent end with opetation or (
+    if (!mathOperations.concat('(').includes(screen.value[screen.value.length - 1])) {
+        screen.value = eval(screen.value)
+    }
+}
+
+//
